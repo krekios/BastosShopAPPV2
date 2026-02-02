@@ -1,0 +1,150 @@
+:root {
+    --bg-dark: #000000;
+    --card-bg: rgba(28, 28, 30, 0.85);
+    --accent-blue: #0A84FF;
+    --accent-gold: #FFD60A;
+    --border: rgba(255, 255, 255, 0.12);
+    --text-dim: #8e8e93;
+    --success: #30D158;
+    --danger: #FF453A; /* Rouge Apple pour le badge */
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at top right, #1a1a1a 0%, #000000 100%);
+    color: white;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 90px;
+    overflow-x: hidden;
+}
+
+/* Animations */
+.page { display: none; padding: 15px; animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.page.active { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounceIn { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* Header */
+.main-header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
+.main-logo-img { width: 140px; filter: drop-shadow(0 0 20px rgba(255,255,255,0.1)); }
+.marketing-banner {
+    background: linear-gradient(90deg, #0A84FF, #5E5CE6);
+    color: white; padding: 10px; border-radius: 14px; font-size: 11px; font-weight: 800;
+    text-align: center; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);
+}
+
+/* Filtres */
+.filter-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+select {
+    background: rgba(44, 44, 46, 0.8); color: white; border: 1px solid var(--border);
+    padding: 10px 15px; border-radius: 12px; font-size: 13px; outline: none; appearance: none;
+    backdrop-filter: blur(10px); text-align: center;
+}
+
+/* Produits */
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.product-card {
+    background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border);
+    overflow: hidden; position: relative; transition: transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.product-card:active { transform: scale(0.96); }
+.product-card img { width: 100%; height: 160px; object-fit: cover; background: #1c1c1e; }
+.badge {
+    position: absolute; top: 10px; right: 10px; 
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+    color: var(--accent-gold); padding: 5px 8px; border-radius: 8px; 
+    font-size: 9px; font-weight: 800; border: 1px solid rgba(255,215,0,0.3); z-index: 2;
+}
+
+/* Onglets Panier */
+.tab-container { display: flex; gap: 5px; margin-bottom: 20px; background: #1c1c1e; padding: 4px; border-radius: 14px; }
+.tab-btn { flex: 1; padding: 10px; background: transparent; color: #8e8e93; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.3s; }
+.tab-btn.active { background: #3a3a3c; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+/* Infos & Réseaux */
+.info-block {
+    background: var(--card-bg); padding: 20px; border-radius: 22px;
+    border: 1px solid var(--border); margin-bottom: 15px; backdrop-filter: blur(20px);
+}
+.info-title { color: var(--accent-blue); margin: 0 0 10px 0; font-size: 17px; font-weight: 700; }
+.schedule-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
+/* Boutons Réseaux */
+.social-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px; border-radius: 18px; text-decoration: none; font-weight: bold; margin-top: 10px;
+    color: white; transition: transform 0.2s; font-size: 14px;
+}
+.social-btn:active { transform: scale(0.98); }
+
+.insta-link {
+    background: linear-gradient(45deg, #FF9500, #FF2D55, #AF52DE);
+    box-shadow: 0 8px 20px rgba(255, 45, 85, 0.25);
+}
+.potato-link {
+    background: linear-gradient(45deg, #8E2DE2, #4A00E0); /* Gradient Violet pour Potato */
+    box-shadow: 0 8px 20px rgba(74, 0, 224, 0.25);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Vue Détail */
+.product-detail-view {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 5000;
+    transform: translateY(100%); transition: 0.4s cubic-bezier(0.32, 1, 0.23, 1); 
+    visibility: hidden; overflow-y: auto; padding-bottom: 120px;
+}
+.product-detail-view.active { transform: translateY(0); visibility: visible; }
+
+/* Poids & Boutons */
+.weight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px; }
+.weight-btn {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 15px;
+    border-radius: 14px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;
+}
+.weight-btn.selected { background: rgba(10, 132, 255, 0.15); border-color: var(--accent-blue); color: var(--accent-blue); }
+
+.btn-primary {
+    background: var(--accent-blue); color: white; border: none; padding: 18px;
+    border-radius: 16px; width: 100%; font-weight: 700; font-size: 16px; 
+    margin-top: 20px; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.3);
+}
+.btn-primary:disabled { background: #2c2c2e; color: #555; box-shadow: none; }
+
+/* Navigation du bas & Badge */
+.bottom-nav-glass {
+    position: fixed; bottom: 25px; left: 20px; right: 20px; height: 70px;
+    background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(25px);
+    border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); display: flex;
+    justify-content: space-around; align-items: center; z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #6e6e73; text-decoration: none; width: 25%; position: relative; }
+.nav-item.active { color: white; }
+.nav-icon { position: relative; } /* Pour positionner le badge */
+.nav-icon svg { width: 24px; height: 24px; margin-bottom: 4px; stroke-width: 2px; }
+.nav-item.active .nav-icon svg { stroke: var(--accent-blue); filter: drop-shadow(0 0 8px rgba(10,132,255,0.6)); }
+.nav-item span { font-size: 10px; font-weight: 600; }
+
+/* STYLE DU BADGE PANIER */
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -6px;
+    background-color: var(--danger);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #202020; /* Pour détourer du fond */
+    display: none; /* Caché par défaut */
+    animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
