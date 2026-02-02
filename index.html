@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bastos Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <div id="page-menu" class="page active">
+        <header class="main-header">
+            <img src="IMG_1178.PNG" class="main-logo-img">
+            <div class="marketing-banner">💎 Arrivage Frais - KGF Certified 💎</div>
+            
+            <div class="filter-container">
+                <select id="farm-filter" onchange="filterProducts()">
+                    <option value="all">Toutes les Farms</option>
+                    <option value="KGF">KGF</option>
+                </select>
+                <select id="category-filter" onchange="filterProducts()">
+                    <option value="all">Catégories</option>
+                    <option value="hash">Hash</option>
+                    <option value="weed">Weed</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="product-grid">
+            <div class="product-card" data-farm="KGF" data-category="hash" 
+                 onclick="openProduct('Trap Grapez 🍇', 'KGF 🦊', 'FROZEN SIFT 🇲🇦', 'https://i.imgur.com/MbC46Y0.mp4', 'Un goût fruité exceptionnel, extraction 90u premium.', { '5g': 60, '10g': 110, '20g': 200 })">
+                <div class="badge">BEST SELLER 🔥</div>
+                <img src="https://tse3.mm.bing.net/th/id/OIP.27XykevTdYOoMCkQZSKXdAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Trap Grapez">
+                <div style="padding:15px;">
+                    <h3 style="margin:0; font-size:15px; font-weight:700;">Trap Grapez 🍇</h3>
+                    <p style="color:#8e8e93; font-size:12px; margin:5px 0;">KGF 🦊 • 90u</p>
+                    <p style="color:var(--accent-blue); font-weight:bold; font-size:14px;">À partir de 60€</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-panier" class="page">
+        <div class="tab-container">
+            <button id="btn-tab-panier" class="tab-btn active" onclick="switchTab('panier')">Panier</button>
+            <button id="btn-tab-commandes" class="tab-btn" onclick="switchTab('commandes')">Historique</button>
+        </div>
+
+        <div id="content-panier">
+            <div id="step-1-cart">
+                <div id="cart-items-list"></div>
+                <button id="btn-valider-panier" class="btn-primary" onclick="goToStep2()" style="display:none;">Passer à la commande ➔</button>
+            </div>
+
+            <div id="step-2-delivery" style="display:none;">
+                <button onclick="goToStep1()" style="background:none; border:none; color:#888; margin-bottom:15px;">❮ Retour au panier</button>
+                <h3 style="margin-bottom:15px;">Mode de réception</h3>
+                
+                <div style="display:flex; gap:12px; margin-bottom:25px;">
+                    <label style="flex:1; background:#2c2c2e; padding:15px; border-radius:16px; text-align:center; border:1px solid var(--border);">
+                        <input type="radio" name="delivery-mode" value="meetup" checked onclick="toggleDeliveryFields()">
+                        <div style="font-weight:bold; margin-top:8px;">📍 Meet-up</div>
+                    </label>
+                    <label style="flex:1; background:#2c2c2e; padding:15px; border-radius:16px; text-align:center; border:1px solid var(--border);">
+                        <input type="radio" name="delivery-mode" value="livraison" onclick="toggleDeliveryFields()">
+                        <div style="font-weight:bold; margin-top:8px;">🚚 Livraison</div>
+                    </label>
+                </div>
+
+                <div id="meetup-fields">
+                    <p style="font-size:12px; color:#888; margin-bottom:8px; font-weight:600;">POINT DE RENDEZ-VOUS :</p>
+                    <select id="meetup-location" style="width:100%;">
+                        <option value="Poitiers Centre">Poitiers Centre</option>
+                        <option value="Alentours (86)">Alentours (86)</option>
+                    </select>
+                </div>
+
+                <div id="livraison-fields" style="display:none;">
+                    <p style="font-size:12px; color:#888; margin-bottom:8px; font-weight:600;">ADRESSE DE LIVRAISON :</p>
+                    <textarea id="delivery-address" placeholder="Rue, Ville, Code Postal, Instructions..." style="width:100%; height:80px; background:#1c1c1e; color:white; border:1px solid var(--border); border-radius:12px; padding:12px; resize:none;"></textarea>
+                </div>
+
+                <button onclick="finaliserCommande()" class="btn-primary" style="background:var(--success);">Confirmer la commande 🚀</button>
+            </div>
+        </div>
+        <div id="content-commandes" style="display:none; text-align:center; padding-top:50px; opacity:0.5;">
+            <p>Aucune commande récente.</p>
+        </div>
+    </div>
+
+    <div id="page-avis" class="page">
+        <h1 style="text-align:center; margin-bottom:25px;">Avis Clients</h1>
+        <div class="review-card" style="background:#1c1c1e; padding:15px; border-radius:18px; border:1px solid var(--border); margin-bottom:10px;">
+            <p style="margin:0; color:var(--accent-gold);">⭐⭐⭐⭐⭐</p>
+            <p style="font-weight:bold; margin:5px 0;">@Alex86</p>
+            <p style="color:#aaa; font-size:13px;">Qualité KGF validée fort. Livraison rapide sur Poitiers.</p>
+        </div>
+        <button class="btn-primary" style="background:#2c2c2e; margin-top:20px;">📝 Écrire un avis</button>
+    </div>
+
+    <div id="page-infos" class="page">
+        <h1 style="text-align:center; margin-bottom:25px;">Informations</h1>
+        
+        <div class="info-block">
+            <h3 class="info-title">📍 Horaires Meet-up</h3>
+            <div class="schedule-row"><span>Lundi - Vendredi</span> <span>11h00 - 22h00</span></div>
+            <div class="schedule-row"><span>Samedi</span> <span>12h00 - 23h00</span></div>
+            <div class="schedule-row"><span>Dimanche</span> <span style="color:#ff453a; font-weight:bold;">Fermé</span></div>
+        </div>
+
+        <div class="info-block">
+            <h3 class="info-title">🚚 Livraison 86</h3>
+            <p style="font-size:13px; line-height:1.6; color:#ccc;">
+                Livraison disponible dans tout le département (86).<br>
+                Rapide, discret et sécurisé.
+            </p>
+        </div>
+
+        <div class="info-block">
+            <h3 class="info-title">📲 Réseaux Sociaux</h3>
+            <p style="font-size:13px; color:#888; margin-bottom:10px;">Suivez-nous pour les exclus :</p>
+            
+            <a href="https://instagram.com/Wb.baastos" class="social-btn insta-link">
+                📸 Instagram : Wb.baastos
+            </a>
+
+            <a href="#" class="social-btn potato-link">
+                🥔 Potato : Wb.baastos
+            </a>
+        </div>
+    </div>
+
+    <div id="product-detail-page" class="product-detail-view">
+        <div style="padding:20px; display:flex; justify-content:space-between; align-items:center;">
+            <button onclick="closeProduct()" style="background:rgba(255,255,255,0.1); border:none; color:white; padding:8px 15px; border-radius:20px; font-weight:600;">Fermer</button>
+            <img src="IMG_1178.PNG" style="height:30px;">
+        </div>
+        
+        <div style="padding:0 20px;">
+            <div style="position:relative; width:100%; aspect-ratio:1/1; border-radius:22px; overflow:hidden; border:1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+                <video id="detail-video" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <div id="detail-tag" style="position:absolute; top:15px; left:15px; background:rgba(10, 132, 255, 0.9); color:white; padding:6px 10px; border-radius:8px; font-size:10px; font-weight:bold; backdrop-filter:blur(5px);"></div>
+            </div>
+            
+            <div style="margin-top:25px;">
+                <h2 id="detail-title" style="margin:0; font-size:26px; letter-spacing:-0.5px;"></h2>
+                <p id="detail-farm" style="color:var(--text-dim); font-weight:600; font-size:16px; margin-top:5px;"></p>
+                <p id="detail-desc" style="color:#ccc; font-size:14px; margin-top:15px; line-height:1.5;"></p>
+            </div>
+
+            <h3 style="margin-top:30px; font-size:14px; color:#888; text-transform:uppercase; letter-spacing:1px;">Quantité :</h3>
+            <div id="weight-selector" class="weight-grid"></div>
+
+            <button id="btn-add-cart" class="btn-primary" disabled onclick="confirmAddToCart()">
+                Sélectionnez une quantité
+            </button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav-glass">
+        <div class="nav-item active" onclick="showPage('page-menu', this)">
+            <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></div>
+            <span>Menu</span>
+        </div>
+        
+        <div class="nav-item" onclick="showPage('page-panier', this)">
+            <div class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span id="nav-cart-badge" class="cart-badge">0</span>
+            </div>
+            <span>Panier</span>
+        </div>
+
+        <div class="nav-item" onclick="showPage('page-avis', this)">
+            <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+            <span>Avis</span>
+        </div>
+        <div class="nav-item" onclick="showPage('page-infos', this)">
+            <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+            <span>Infos</span>
+        </div>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
